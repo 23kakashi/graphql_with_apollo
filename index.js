@@ -25,15 +25,15 @@ const typeDefs = gql`
 
 const resolvers = {
   Query: {
-    sessions: () => {
-      return sessions;
+    sessions: (parent, args, { dataSources }, info) => {
+      return dataSources.sessionAPI.getSessions();
     },
   },
 };
 
-const dataSources = () => {
-  sessionAPI: new SessionAPI();
-};
+const dataSources = () => ({
+  sessionAPI: new SessionAPI(),
+});
 
 const server = new ApolloServer({ typeDefs, resolvers, dataSources });
 
